@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="stylesheet" href="pixel.css" type="text/css">
+    <script>
+      var points = 0;
+      var x, y = 0;
+      var master_seconds = 4;
+      var seconds = master_seconds;
+      var t
+
+      function found() {
+        document.getElementById("pixel-container").style.cursor = "pointer";
+      };
+
+      function addpoints() {
+        //add up points for clicking the pixel
+        points += 20;
+        document.getElementById("points").innerHTML = "Points: " + points;
+        //restart counter
+        seconds = master_seconds;
+        document.getElementById("time").innerHTML = seconds.toFixed(1) + " s";
+        move();
+        resetTimer();
+      };
+
+      function move() {
+        document.getElementById("pixel-container").style.left = Math.floor(Math.random() * (document.getElementById('gameboard').offsetWidth-5)) + "px";
+        document.getElementById("pixel-container").style.top = Math.floor(Math.random() * (document.getElementById('gameboard').offsetHeight-5)) + "px";
+      };
+
+      function start() {
+        document.getElementById("start").style.visibility = "hidden";
+        document.getElementById("the-pixel").style.visibility = "visible";
+        document.getElementById("pixel-container").style.visibility = "visible";
+	move();
+        countdown();
+      }
+
+      function restart() {
+        points = 0;
+        document.getElementById("points").innerHTML = "Points: " + points;
+        document.getElementById("restart").style.visibility = "hidden";
+        document.getElementById("the-pixel").style.visibility = "visible";
+        document.getElementById("pixel-container").style.visibility = "visible";
+        resetTimer();
+      }
+
+      function displaytime() {
+        // displays time in p
+        document.getElementById("time").innerHTML = seconds.toFixed(1) + " s";
+      };
+
+      function countdown() {
+        // starts countdown
+        displaytime();
+        if (seconds <= 0.0) {
+          //time's up
+          document.getElementById("time").innerHTML = "Time's up!";
+          document.getElementById("points").innerHTML = "Points: " + points;
+          document.getElementById("pixel-container").style.visibility = "hidden";
+          document.getElementById("the-pixel").style.visibility = "hidden";
+          document.getElementById("restart").style.visibility = "visible";
+        } else {
+          seconds = seconds - 0.1;
+          t = setTimeout("countdown()", 100);
+        }
+      };
+
+      function cdpause() {
+        //pauses countdown
+        clearTimeout(t);
+      };
+
+      function resetTimer() {
+        // resets countdown timer
+        cdpause();
+        seconds = master_seconds;
+        displaytime();
+        countdown();
+      }
+
+    </script>
+  </head>
+
+  <body>
+    <h1 align="center">
+    Find the Pixel!
+    </h1>
+    <p id="instructions" align="center">
+      A secret pixel is in the box. <strong>Click it</strong> to get points!
+    </p>
+    <h3 id="points">
+      Points: 0
+    </h3>
+    <p id="time"></p>
+    <button id="start" onclick="start();">Start</button>
+    <button id="restart"  onclick="restart()">Restart</button>
+    <br><br>
+    <div id="gameboard" align="center">
+      <div id="pixel-container" onmouseover="found()" onclick="addpoints()">
+        <div id="the-pixel"></div>
+      </div>
+    </div>
+  </body>
+
+</html>
+
+
