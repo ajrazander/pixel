@@ -26,13 +26,17 @@ body {
   padding-top: 2px;
   padding-left: 2px;
   visibility: hidden;
+/* allowing this background color
+* allows for the user to easily spot
+* the pixel.
   background-color: red;
+*/
 }
 
 #gameboard {
   margin: 2px 2px 2px 2px;
-  width: 300px;
-  height: 250px;
+  width: 450px;
+  height: 375px;
   border: 1px black solid;
   padding: 2px 2px 2px 2px;
   box-sizing: border-box;
